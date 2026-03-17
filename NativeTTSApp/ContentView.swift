@@ -8,12 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var inputText: String = ""
+    @State var sliderValue: Float = 0.5
+    @StateObject private var synthesizer = SpeechSynthesizer()
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            TextField("Input text", text: $inputText)
+            
+            Text("rate")
+            Slider(value: $sliderValue, in: 0...1)
+            Button("synthesize") {
+                synthesizer.synthesize(text: inputText, rate: sliderValue)
+            }
         }
         .padding()
     }
